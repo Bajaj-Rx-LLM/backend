@@ -1,18 +1,17 @@
-version: "3.8"
-
 services:
   chromadb:
     image: ghcr.io/chroma-core/chroma:latest
-    command: --api
     ports:
       - "8000:8000"
     volumes:
       - chroma_data:/chroma
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v2/heartbeat"]
       interval: 30s
       timeout: 10s
       retries: 3
 
 volumes:
-  chroma_data: {}
+  chroma_data:
+    # Defining the driver is good practice, though 'local' is the default.
+    driver: local
